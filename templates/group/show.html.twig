@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{group.name}}
+{% endblock %}
+
+{% block body %}
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="card mt-3 shadow mb-3">
+					<div class="card-body">
+						<h5 class="card-title">
+							{{group.name}}</h5>
+						<hr>
+						<div class="d-flex flex-row justify-content-between align-items-center">
+							<div>
+								<p class="mb-2">
+									<strong>Techniques :</strong>
+									<ul class="list-group shadow-sm">
+										{% for technique in group.techniques %}
+											<li class="list-group-item">
+												<a href="/technique/{{technique.slug}}">{{technique.name}}</a>
+											</li>
+										{% endfor %}
+									</ul>
+								</p>
+							</div>
+							<p class="card-text mt-4">
+								<strong>Adresse :</strong>
+								{{group.adress}}<br>
+								<strong>Code postal :</strong>
+								{{group.zip}}<br>
+								<strong>Ville :</strong>
+								{{group.city}}<br>
+								<strong>Téléphone :</strong>
+								{{group.phone}}<br>
+							</p>
+						</div>
+						<p class="card-text">
+							<strong>Description :</strong>
+							{{group.description}}
+						</p>
+						<p class="mb-2">
+							<strong>Images :</strong>
+						</p>
+						<div class="gallerie">
+							<div class="gallerie-container">
+								{% for image in group.images %}
+									<div class="mb-3 mx-1 position-relative hover-delete-image galerie-object">
+										<img src="{{asset('images/')}}{{image.name}}" alt="image" class="image-preview bg-dark rounded p-0 gallerie-image">
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+						<a href="/" class="btn btn-danger">Retour</a>
+						<a href="{{group.link}}" class="btn btn-primary" target="_blank">Site</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>{% endblock %}

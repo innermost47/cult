@@ -49,9 +49,15 @@ class Technique
      */
     private $praticiens;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Group::class, mappedBy="techniques")
+     */
+    private $groups;
+
     public function __construct()
     {
         $this->praticiens = new ArrayCollection();
+        $this->groups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,6 +147,33 @@ class Technique
     {
         if ($this->praticiens->removeElement($praticien)) {
             $praticien->removeTechnique($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Group>
+     */
+    public function getGroups(): Collection
+    {
+        return $this->groups;
+    }
+
+    public function addGroup(Group $group): self
+    {
+        if (!$this->groups->contains($group)) {
+            $this->groups[] = $group;
+            $group->addTechnique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroup(Group $group): self
+    {
+        if ($this->groups->removeElement($group)) {
+            $group->removeTechnique($this);
         }
 
         return $this;

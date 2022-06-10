@@ -24,9 +24,15 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity=Praticien::class, inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $praticien;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Group::class, inversedBy="images")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $groupe;
 
     public function getId(): ?int
     {
@@ -53,6 +59,18 @@ class Image
     public function setPraticien(?Praticien $praticien): self
     {
         $this->praticien = $praticien;
+
+        return $this;
+    }
+
+    public function getGroupe(): ?Group
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(?Group $groupe): self
+    {
+        $this->groupe = $groupe;
 
         return $this;
     }

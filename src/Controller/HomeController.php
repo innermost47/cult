@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\GroupRepository;
 use App\Repository\PraticienRepository;
 use App\Repository\TechniqueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,11 +16,13 @@ class HomeController extends AbstractController
 {
     private $praticienRepository;
     private $techniqueRepository;
+    private $groupRepository;
 
-    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository)
+    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository)
     {
         $this->praticienRepository = $praticienRepository;
         $this->techniqueRepository = $techniqueRepository;
+        $this->groupRepository = $groupRepository;
     }
 
     /**
@@ -30,6 +33,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'praticiens' => $this->praticienRepository->findAllByLastName(),
             'techniques' => $this->techniqueRepository->findAllByName(),
+            'groups' => $this->groupRepository->findAllByName()
         ]);
     }
 }
