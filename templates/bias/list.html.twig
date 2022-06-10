@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Liste des biais cognitifs courants
+{% endblock %}
+
+{% block body %}
+	<section>
+		<div class="container">
+
+			<div class="card mt-3 shadow mb-3">
+				<div class="card-image-container">
+					<img src="{{asset('images/brain.jpg')}}" class="card-image-top rounded" alt="image">
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						Liste des biais cognitifs courants</h5>
+					<p class="mb-2 mt-3">
+						<ul class="list-group shadow-sm">
+							{% for bias in biases %}
+								<li class="list-group-item">
+									<p class="card-text">
+										<strong>{{bias.name}}</strong><br>
+										{{bias.description}}
+									</p>
+								</li>
+							{% endfor %}
+						</ul>
+					</p>
+					<a href="/" class="btn btn-danger">Retour</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>{% endblock %}

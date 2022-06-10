@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{bias.name}}
+{% endblock %}
+
+{% block body %}
+	<section>
+		<div class="container">
+			<div class="card mt-3 shadow mb-3">
+				<div class="card-image-container">
+					<img src="{{asset('images/brain.jpg')}}" class="card-image-top rounded" alt="image">
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						{{bias.name}}</h5>
+					<hr>
+					<p class="card-text">
+						<strong>Définition :</strong>
+						{{bias.description}}
+					</p>
+					<a href="/" class="btn btn-danger">Retour</a>
+					<a href="/bias/list" class="btn btn-primary">Liste des biais</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>{% endblock %}

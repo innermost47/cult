@@ -4,7 +4,10 @@
 {% endblock %}
 
 {% block body %}
-	{% include "home/_praticien.html.twig" %}
-	{% include "home/_group.html.twig" %}
-	{% include "home/_technique.html.twig" %}
+	<div class="mb-3">
+		{% include "home/_praticien.html.twig" %}
+		{% include "home/_group.html.twig" %}
+		{% include "home/_technique.html.twig" %}
+		{% include "home/_bias.html.twig" %}
+	</div>
 {% endblock %}
