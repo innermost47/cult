@@ -7,6 +7,7 @@ use App\Repository\BiasRepository;
 use App\Repository\GroupRepository;
 use App\Repository\PraticienRepository;
 use App\Repository\TechniqueRepository;
+use App\Repository\YoutubeChannelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,14 +22,16 @@ class HomeController extends AbstractController
     private $groupRepository;
     private $biasRepository;
     private $biasCategoryRepository;
+    private $youtubeChannelRepository;
 
-    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository, BiasRepository $biasRepository, BiasCategoryRepository $biasCategoryRepository)
+    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository, BiasRepository $biasRepository, BiasCategoryRepository $biasCategoryRepository, YoutubeChannelRepository $youtubeChannelRepository)
     {
         $this->praticienRepository = $praticienRepository;
         $this->techniqueRepository = $techniqueRepository;
         $this->groupRepository = $groupRepository;
         $this->biasRepository = $biasRepository;
         $this->biasCategoryRepository = $biasCategoryRepository;
+        $this->youtubeChannelRepository = $youtubeChannelRepository;
     }
 
     /**
@@ -42,6 +45,7 @@ class HomeController extends AbstractController
             'groups' => $this->groupRepository->findAllByName(),
             'biases' => $this->biasRepository->findAllByName(),
             'biasCategories' => $this->biasCategoryRepository->findAll(),
+            'youtubeChannels' => $this->youtubeChannelRepository->findAllByName(),
         ]);
     }
 }
