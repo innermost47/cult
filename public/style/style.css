@@ -4,6 +4,10 @@ a {
   text-decoration: none !important;
 }
 
+textarea {
+  height: 200px;
+}
+
 .pointer {
   cursor: pointer;
 }

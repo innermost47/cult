@@ -32,6 +32,12 @@ class Bias
      */
     private $slug;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=BiasCategory::class, inversedBy="bias")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $biasCategory;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,18 @@ class Bias
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getBiasCategory(): ?BiasCategory
+    {
+        return $this->biasCategory;
+    }
+
+    public function setBiasCategory(?BiasCategory $biasCategory): self
+    {
+        $this->biasCategory = $biasCategory;
 
         return $this;
     }

@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Bias;
-use App\Form\BiasType;
+use App\Entity\BiasCategory;
+use App\Form\BiasCategoryType;
 use App\Repository\BiasCategoryRepository;
-use App\Repository\BiasRepository;
-use App\Service\FileUploader;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,9 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/bias", name="bias_")
+ * @Route("/bias-category", name="bias_category_")
  */
-class BiasController extends AbstractController
+class BiasCategoryController extends AbstractController
 {
     private $manager;
     private $route;
@@ -28,17 +26,14 @@ class BiasController extends AbstractController
     private $listRender;
     private $showRender;
 
-    public function __construct(EntityManagerInterface $manager, BiasRepository $repository, FileUploader $fileUploader)
+    public function __construct(EntityManagerInterface $manager, BiasCategoryRepository $repository)
     {
         $this->manager = $manager;
         $this->route = 'home_index';
-        $this->fragment = 'bias';
-        $this->formRender = 'bias/index.html.twig';
-        $this->listRender = 'bias/list.html.twig';
-        $this->showRender = 'bias/show.html.twig';
+        $this->fragment = 'bias-category';
+        $this->formRender = 'bias_category/index.html.twig';
         $this->slugger = new Slugify();
         $this->repository = $repository;
-        $this->fileUploader = $fileUploader;
     }
 
     /**
@@ -46,8 +41,8 @@ class BiasController extends AbstractController
      */
     public function add(Request $request): Response
     {
-        $item = new Bias();
-        $form = $this->createForm(BiasType::class, $item, []);
+        $item = new BiasCategory();
+        $form = $this->createForm(BiasCategoryType::class, $item, []);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -66,9 +61,9 @@ class BiasController extends AbstractController
     /**
      * @Route("/update/{slug}", name="update", methods={"GET", "POST"})
      */
-    public function update(Bias $item, Request $request): Response
+    public function update(BiasCategory $item, Request $request): Response
     {
-        $form = $this->createForm(BiasType::class, $item, []);
+        $form = $this->createForm(BiasCategoryType::class, $item, []);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -100,25 +95,5 @@ class BiasController extends AbstractController
             $this->manager->flush();
         }
         return $this->redirectToRoute($this->route, ['_fragment' => $this->fragment]);
-    }
-
-    /**
-     * @Route("/list", name="list", methods={"GET"})
-     */
-    public function list(BiasCategoryRepository $biasCategoryRepository): Response
-    {
-        return $this->render($this->listRender, [
-            'biasCategories' => $biasCategoryRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/{slug}", name="show", methods={"GET"})
-     */
-    public function show(Bias $bias): Response
-    {
-        return $this->render($this->showRender, [
-            'bias' => $bias,
-        ]);
     }
 }

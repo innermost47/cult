@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\BiasCategoryRepository;
 use App\Repository\BiasRepository;
 use App\Repository\GroupRepository;
 use App\Repository\PraticienRepository;
@@ -19,13 +20,15 @@ class HomeController extends AbstractController
     private $techniqueRepository;
     private $groupRepository;
     private $biasRepository;
+    private $biasCategoryRepository;
 
-    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository, BiasRepository $biasRepository)
+    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository, BiasRepository $biasRepository, BiasCategoryRepository $biasCategoryRepository)
     {
         $this->praticienRepository = $praticienRepository;
         $this->techniqueRepository = $techniqueRepository;
         $this->groupRepository = $groupRepository;
         $this->biasRepository = $biasRepository;
+        $this->biasCategoryRepository = $biasCategoryRepository;
     }
 
     /**
@@ -38,6 +41,7 @@ class HomeController extends AbstractController
             'techniques' => $this->techniqueRepository->findAllByName(),
             'groups' => $this->groupRepository->findAllByName(),
             'biases' => $this->biasRepository->findAllByName(),
+            'biasCategories' => $this->biasCategoryRepository->findAll(),
         ]);
     }
 }
