@@ -26,6 +26,7 @@ class YoutubeChannelController extends AbstractController
     private $repository;
     private $fileUploader;
     private $showRender;
+    private $listRender;
 
     public function __construct(EntityManagerInterface $manager, YoutubeChannelRepository $repository, FileUploader $fileUploader)
     {
@@ -34,6 +35,7 @@ class YoutubeChannelController extends AbstractController
         $this->fragment = 'youtube-channel';
         $this->formRender = 'youtube_channel/index.html.twig';
         $this->showRender = 'youtube_channel/show.html.twig';
+        $this->listRender = 'youtube_channel/list.html.twig';
         $this->slugger = new Slugify();
         $this->repository = $repository;
         $this->fileUploader = $fileUploader;
@@ -114,6 +116,16 @@ class YoutubeChannelController extends AbstractController
             $this->manager->flush();
         }
         return $this->redirectToRoute($this->route, ['_fragment' => $this->fragment]);
+    }
+
+    /**
+     * @Route("/list", name="list", methods={"GET"})
+     */
+    public function list(YoutubeChannelRepository $youtubeChannelRepository): Response
+    {
+        return $this->render($this->listRender, [
+            'youtubeChannels' => $youtubeChannelRepository->findAllByName(),
+        ]);
     }
 
     /**

@@ -63,3 +63,22 @@ textarea {
 .image-preview {
   width: 150px;
 }
+
+.socials {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.socials-logo {
+  width: 30px;
+}
+
+.filter-hover {
+  filter: grayscale(0);
+  transition: filter 0.3s ease-in-out;
+}
+
+.filter-hover:hover {
+  filter: grayscale(100%);
+}

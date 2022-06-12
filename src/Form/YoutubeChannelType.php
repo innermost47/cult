@@ -38,7 +38,27 @@ class YoutubeChannelType extends AbstractType
                 ]
             ])
             ->add('link', null, [
-                'label' => 'Lien',
+                'label' => 'Lien YouTube',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
+                        'min' => 2,
+                        'max' => 255,
+                    ]),
+                ]
+            ])
+            ->add('facebookPage', null, [
+                'label' => 'Page Facebook',
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
+                        'min' => 2,
+                        'max' => 255,
+                    ]),
+                ]
+            ])
+            ->add('site', null, [
+                'label' => 'Lien Site',
                 'constraints' => [
                     new NotBlank(),
                     new Length([
