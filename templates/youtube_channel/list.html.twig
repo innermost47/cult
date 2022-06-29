@@ -5,22 +5,24 @@
 {% endblock %}
 
 {% block body %}
-	<section>
-		<div class="container">
-			{% for youtubeChannel in youtubeChannels | reverse %}
-				<a href="/youtube-channel/{{youtubeChannel.slug}}">
-					<div class="card mt-3 shadow mb-3 filter-hover">
-						<div class="card-image-container">
-							<img src="{{asset('images/')}}{{youtubeChannel.image}}" class="card-image-top rounded" alt="image">
+	{% if is_granted("IS_AUTHENTICATED_FULLY")%}
+		<section>
+			<div class="container">
+				{% for youtubeChannel in youtubeChannels | reverse %}
+					<a href="/youtube-channel/{{youtubeChannel.slug}}">
+						<div class="card mt-3 shadow mb-3 filter-hover">
+							<div class="card-image-container">
+								<img src="{{asset('images/')}}{{youtubeChannel.image}}" class="card-image-top rounded" alt="image">
+							</div>
+							<div class="card-body">
+								<h5 class="card-title text-dark">
+									{{youtubeChannel.name}}</h5>
+							</div>
 						</div>
-						<div class="card-body">
-							<h5 class="card-title text-dark">
-								{{youtubeChannel.name}}</h5>
-						</div>
-					</div>
-				</a>
+					</a>
 
-			{% endfor %}
-		</div>
-	</section>
+				{% endfor %}
+			</div>
+		</section>
+	{% endif %}
 {% endblock %}

@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+{% if is_granted("IS_AUTHENTICATED_FULLY")%}
 	<section>
 		<div class="container">
 
@@ -36,4 +37,4 @@
 
 		</div>
 	</div>
-</section>{% endblock %}
+</section>{% endif %}{% endblock %}

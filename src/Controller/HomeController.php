@@ -9,6 +9,7 @@ use App\Repository\PraticienRepository;
 use App\Repository\TechniqueRepository;
 use App\Repository\YoutubeChannelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,6 +40,10 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
+        if ($this->getUser() === null) {
+            return new RedirectResponse($this->generateUrl('login'));
+        }
+
         return $this->render('home/index.html.twig', [
             'praticiens' => $this->praticienRepository->findAllByLastName(),
             'techniques' => $this->techniqueRepository->findAllByName(),

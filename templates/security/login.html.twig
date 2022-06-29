@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+	<div class="container window-log">
+		<div class="box-log">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="image-container">
+						<img src="{{asset('images/login.jpg')}}" alt="connexion image">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<form method="post" class="mt-3">
+						<h1 class="h3 mb-3 font-weight-normal text-center">CONNEXION</h1>
+						<div class="mb-3">
+							<label for="inputEmail" class="form-label required">Email</label>
+							<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+						</div>
+						<div class="mb-3">
+							<label for="inputPassword" class="form-label required">Mot de passe</label>
+							<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+						</div>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<div class="checkbox mb-3">
+							<label>
+								<input type="checkbox" name="_remember_me">
+								Se rappeler de moi
+							</label>
+						</div>
+						<div class="d-flex flex-row justify-content-between">
+							<button class="btn btn-primary" type="submit">
+								Connexion
+							</button>
+							{# <a href="{{path('reset-password')}}" class="text-center">Mot de passe oublié ?</a> #}
+						</div>
+						{% if error %}
+							<div class="alert alert-danger mt-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+						{% endif %}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

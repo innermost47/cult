@@ -4,24 +4,26 @@
 {% endblock %}
 
 {% block body %}
-	<section>
-		<div class="container">
-			<div class="row">
-				<div class="card mt-3 p-3 mb-3 shadow">
-					<div class="card-body">
-						<h2 class="mt-3 pb-3">Technique</h2>
-						{% if image != null %}
-							<p>Image actuelle</p>
-							<img src="{{asset('images/')}}{{image}}" alt="logo" class="image-preview mb-3">
-						{% endif %}
-						{{form_start(form)}}
-						{{form_widget(form)}}
-						<a href="{{ path('home_index') }}#technique" class="btn btn-danger">
-							Retour</a>
-						<button type="submit" class="btn btn-dark">Valider</button>
-						{{form_end(form)}}
+	{% if is_granted("IS_AUTHENTICATED_FULLY")%}
+		<section>
+			<div class="container">
+				<div class="row">
+					<div class="card mt-3 p-3 mb-3 shadow">
+						<div class="card-body">
+							<h2 class="mt-3 pb-3">Technique</h2>
+							{% if image != null %}
+								<p>Image actuelle</p>
+								<img src="{{asset('images/')}}{{image}}" alt="logo" class="image-preview mb-3">
+							{% endif %}
+							{{form_start(form)}}
+							{{form_widget(form)}}
+							<a href="{{ path('home_index') }}#technique" class="btn btn-danger">
+								Retour</a>
+							<button type="submit" class="btn btn-dark">Valider</button>
+							{{form_end(form)}}
+						</div>
 					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		{% endif %}
 	{% endblock %}

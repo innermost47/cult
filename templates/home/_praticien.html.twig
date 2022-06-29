@@ -31,7 +31,9 @@
 								<td>{{praticien.lastName}}</td>
 								<td>{{praticien.firstName}}</td>
 								<td>
-									<a href="{{praticien.site}}" target="_blank">Site</a>
+									{% if 'http' in praticien.site %}
+										<a href="{{praticien.site}}" target="_blank">Site</a>
+									{% endif %}
 								</td>
 								<td>{{praticien.zip}}</td>
 								<td>{{praticien.city}}</td>
