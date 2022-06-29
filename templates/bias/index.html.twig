@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des biais
+{% block title %}Esprit sceptique - Gestion des biais
 {% endblock %}
 
 {% block body %}
@@ -13,7 +13,7 @@
 							<h2 class="mt-3 pb-3">Biais</h2>
 							{{form_start(form)}}
 							{{form_widget(form)}}
-							<a href="{{ path('home_index') }}#bias" class="btn btn-danger">
+							<a href="/admin#bias" class="btn btn-danger">
 								Retour</a>
 							<button type="submit" class="btn btn-dark">Valider</button>
 							{{form_end(form)}}

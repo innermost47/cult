@@ -18,39 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class HomeController extends AbstractController
 {
-    private $praticienRepository;
-    private $techniqueRepository;
-    private $groupRepository;
-    private $biasRepository;
-    private $biasCategoryRepository;
-    private $youtubeChannelRepository;
-
-    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository, BiasRepository $biasRepository, BiasCategoryRepository $biasCategoryRepository, YoutubeChannelRepository $youtubeChannelRepository)
-    {
-        $this->praticienRepository = $praticienRepository;
-        $this->techniqueRepository = $techniqueRepository;
-        $this->groupRepository = $groupRepository;
-        $this->biasRepository = $biasRepository;
-        $this->biasCategoryRepository = $biasCategoryRepository;
-        $this->youtubeChannelRepository = $youtubeChannelRepository;
-    }
-
     /**
      * @Route("/", name="index")
      */
     public function index(): Response
     {
-        if ($this->getUser() === null) {
-            return new RedirectResponse($this->generateUrl('login'));
-        }
-
-        return $this->render('home/index.html.twig', [
-            'praticiens' => $this->praticienRepository->findAllByLastName(),
-            'techniques' => $this->techniqueRepository->findAllByName(),
-            'groups' => $this->groupRepository->findAllByName(),
-            'biases' => $this->biasRepository->findAllByName(),
-            'biasCategories' => $this->biasCategoryRepository->findAll(),
-            'youtubeChannels' => $this->youtubeChannelRepository->findAllByName(),
-        ]);
+        return $this->render('home/index.html.twig', []);
     }
 }

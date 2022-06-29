@@ -1,17 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home of the Evil Database
+{% block title %}Esprit sceptique - Accueil
 {% endblock %}
 
 {% block body %}
-	{% if is_granted("IS_AUTHENTICATED_FULLY")%}
-		<div class="mb-3">
-			{% include "home/_praticien.html.twig" %}
-			{% include "home/_group.html.twig" %}
-			{% include "home/_technique.html.twig" %}
-			{% include "home/_bias_category.html.twig" %}
-			{% include "home/_bias.html.twig" %}
-			{% include "home/_youtube_channel.html.twig" %}
+	<header class="d-flex flex-column justify-content-center align-items-center">
+		<div class="logo">
+			<img src="{{asset("images/logo-full.svg")}}" alt="logo full">
 		</div>
-	{% endif %}
+	</header>
 {% endblock %}

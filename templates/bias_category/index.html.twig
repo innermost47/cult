@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des catégories de biais
+{% block title %}Esprit sceptique - Gestion des catégories de biais
 {% endblock %}
 
 {% block body %}
@@ -13,7 +13,7 @@
 							<h2 class="mt-3 pb-3">Catégorie de biais</h2>
 							{{form_start(form)}}
 							{{form_widget(form)}}
-							<a href="{{ path('home_index') }}#bias-category" class="btn btn-danger">
+							<a href="/admin#bias-category" class="btn btn-danger">
 								Retour</a>
 							<button type="submit" class="btn btn-dark">Valider</button>
 							{{form_end(form)}}

@@ -26,6 +26,7 @@ class TechniqueController extends AbstractController
     private $repository;
     private $fileUploader;
     private $showRender;
+    private $listRender;
 
     public function __construct(EntityManagerInterface $manager, TechniqueRepository $repository, FileUploader $fileUploader)
     {
@@ -34,6 +35,7 @@ class TechniqueController extends AbstractController
         $this->fragment = 'technique';
         $this->formRender = 'technique/index.html.twig';
         $this->showRender = 'technique/show.html.twig';
+        $this->listRender = 'technique/list.html.twig';
         $this->slugger = new Slugify();
         $this->repository = $repository;
         $this->fileUploader = $fileUploader;
@@ -82,6 +84,7 @@ class TechniqueController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $image = $form->get('image')->getData();
             if ($image) {
+                $this->fileUploader->delete($image);
                 $imageName = $this->fileUploader->upload($image);
                 $item->setImage($imageName);
             }
@@ -114,6 +117,16 @@ class TechniqueController extends AbstractController
             $this->manager->flush();
         }
         return $this->redirectToRoute($this->route, ['_fragment' => $this->fragment]);
+    }
+
+    /**
+     * @Route("/list", name="list", methods={"GET"})
+     */
+    public function list(TechniqueRepository $techniqueRepository): Response
+    {
+        return $this->render($this->listRender, [
+            'techniques' => $techniqueRepository->findAllByName(),
+        ]);
     }
 
     /**

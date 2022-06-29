@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
+{% block title %}Esprit sceptique -
 	{{praticien.firstName ~ ' ' ~ praticien.lastName}}
 {% endblock %}
 
@@ -22,7 +22,7 @@
 						{% endif %}
 						{{praticien.firstName ~ ' ' ~ praticien.lastName}}</h5>
 					<hr>
-					<div class="d-flex flex-row justify-content-between align-items-center">
+					<div class="flex-box">
 						<div>
 							<p class="mb-2">
 								<strong>Techniques :</strong>
@@ -35,7 +35,7 @@
 								</ul>
 							</p>
 						</div>
-						<p class="card-text mt-4">
+						<p class="card-text">
 							<strong>Adresse :</strong>
 							{{praticien.adress}}<br>
 							<strong>Code postal :</strong>
@@ -46,7 +46,7 @@
 							{{praticien.phone}}<br>
 						</p>
 					</div>
-					<p class="mb-2">
+					<p class="mb-2 mt-3">
 						<strong>Images :</strong>
 					</p>
 					<div class="gallerie">

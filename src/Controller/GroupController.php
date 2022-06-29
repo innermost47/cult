@@ -89,6 +89,7 @@ class GroupController extends AbstractController
             $images = $form->get('images')->getData();
             if ($images) {
                 foreach ($images as $image) {
+                    $this->fileUploader->delete($image);
                     $imageName = $this->fileUploader->upload($image);
                     $img = new Image();
                     $img->setName($imageName);

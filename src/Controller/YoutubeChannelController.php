@@ -84,6 +84,7 @@ class YoutubeChannelController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $image = $form->get('image')->getData();
             if ($image) {
+                $this->fileUploader->delete($image);
                 $imageName = $this->fileUploader->upload($image);
                 $item->setImage($imageName);
             }

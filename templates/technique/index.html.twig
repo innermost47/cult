@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des techniques
+{% block title %}Esprit sceptique - Gestion des techniques
 {% endblock %}
 
 {% block body %}
@@ -17,7 +17,7 @@
 							{% endif %}
 							{{form_start(form)}}
 							{{form_widget(form)}}
-							<a href="{{ path('home_index') }}#technique" class="btn btn-danger">
+							<a href="/admin#technique" class="btn btn-danger">
 								Retour</a>
 							<button type="submit" class="btn btn-dark">Valider</button>
 							{{form_end(form)}}
