@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Esprit sceptique - Liste des praticiens
+{% endblock %}
+
+{% block body %}
+
+	<section>
+		<div class="container">
+			{% for praticien in praticiens | reverse %}
+
+				<div class="card mt-3 shadow mb-3 filter-hover">
+					<a href="/praticien/{{praticien.slug}}">
+						<div class="card-image-container">
+							<img src="{{asset('images/')}}{{praticien.images[0]}}" class="card-image-top rounded" alt="image">
+						</div>
+					</a>
+					<div class="card-body">
+						<h5 class="card-title text-dark">
+							{{praticien.firstName}}
+							{{praticien.lastName}}</h5>
+						<hr>
+						<p class="mb-2">
+							<strong>
+								<i>Techniques :</i>
+							</strong>
+							<ul class="list-group shadow-sm">
+								{% for technique in praticien.techniques %}
+									<li class="list-group-item">
+										<p class="m-0">{{technique.name}}</p>
+									</li>
+								{% endfor %}
+							</ul>
+						</p>
+
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</section>
+
+{% endblock %}

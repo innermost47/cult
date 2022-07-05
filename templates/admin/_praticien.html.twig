@@ -16,9 +16,7 @@
 							<th scope="col">#</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Prénom</th>
-							<th scope="col">Site</th>
-							<th scope="col">Code postal</th>
-							<th scope="col">Ville</th>
+							<th scope="col">Signalements</th>
 							<th scope="col">Techniques</th>
 							<th scope="col">Action</th>
 						</tr>
@@ -30,13 +28,7 @@
 								<td>{{praticien.id}}</td>
 								<td>{{praticien.lastName}}</td>
 								<td>{{praticien.firstName}}</td>
-								<td>
-									{% if 'http' in praticien.site %}
-										<a href="{{praticien.site}}" target="_blank">Site</a>
-									{% endif %}
-								</td>
-								<td>{{praticien.zip}}</td>
-								<td>{{praticien.city}}</td>
+								<td>{{praticien.reportings|length}}</td>
 								<td>
 									{% for technique in praticien.techniques %}
 										{{technique.name}},

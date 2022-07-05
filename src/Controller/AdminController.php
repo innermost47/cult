@@ -12,9 +12,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/admin", name="app_admin")
+ * @Security("is_granted('ROLE_USER')")
  */
 class AdminController extends AbstractController
 {
@@ -41,10 +43,6 @@ class AdminController extends AbstractController
      */
     public function index(): Response
     {
-        if ($this->getUser() === null) {
-            return new RedirectResponse($this->generateUrl('login'));
-        }
-
         return $this->render('admin/index.html.twig', [
             'praticiens' => $this->praticienRepository->findAllByLastName(),
             'techniques' => $this->techniqueRepository->findAllByName(),

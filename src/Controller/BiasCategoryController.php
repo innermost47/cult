@@ -11,9 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/bias-category", name="bias_category_")
+ * @Security("is_granted('ROLE_USER')")
  */
 class BiasCategoryController extends AbstractController
 {
@@ -29,7 +31,7 @@ class BiasCategoryController extends AbstractController
     public function __construct(EntityManagerInterface $manager, BiasCategoryRepository $repository)
     {
         $this->manager = $manager;
-        $this->route = 'home_index';
+        $this->route = 'admin_index';
         $this->fragment = 'bias-category';
         $this->formRender = 'bias_category/index.html.twig';
         $this->slugger = new Slugify();

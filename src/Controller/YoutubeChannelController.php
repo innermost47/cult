@@ -12,9 +12,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/youtube-channel", name="youtube_channel_")
+ * @Security("is_granted('ROLE_USER')")
  */
 class YoutubeChannelController extends AbstractController
 {
@@ -31,7 +33,7 @@ class YoutubeChannelController extends AbstractController
     public function __construct(EntityManagerInterface $manager, YoutubeChannelRepository $repository, FileUploader $fileUploader)
     {
         $this->manager = $manager;
-        $this->route = 'home_index';
+        $this->route = 'admin_index';
         $this->fragment = 'youtube-channel';
         $this->formRender = 'youtube_channel/index.html.twig';
         $this->showRender = 'youtube_channel/show.html.twig';

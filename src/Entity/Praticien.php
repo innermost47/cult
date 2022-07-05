@@ -69,10 +69,16 @@ class Praticien
      */
     private $site;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reporting::class, mappedBy="praticien", orphanRemoval=true, cascade={"persist"})
+     */
+    private $reportings;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->techniques = new ArrayCollection();
+        $this->reportings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -228,5 +234,40 @@ class Praticien
         $this->site = $site;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Reporting>
+     */
+    public function getReportings(): Collection
+    {
+        return $this->reportings;
+    }
+
+    public function addReporting(Reporting $reporting): self
+    {
+        if (!$this->reportings->contains($reporting)) {
+            $this->reportings[] = $reporting;
+            $reporting->setPraticien($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReporting(Reporting $reporting): self
+    {
+        if ($this->reportings->removeElement($reporting)) {
+            // set the owning side to null (unless already changed)
+            if ($reporting->getPraticien() === $this) {
+                $reporting->setPraticien(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 }

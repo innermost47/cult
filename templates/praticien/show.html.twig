@@ -34,6 +34,10 @@
 									{% endfor %}
 								</ul>
 							</p>
+							<p class="m-0">
+								<strong>Nombre de signalements :</strong>
+								{{praticien.reportings|length}}
+							</p>
 						</div>
 						<p class="card-text">
 							<strong>Adresse :</strong>
@@ -46,6 +50,7 @@
 							{{praticien.phone}}<br>
 						</p>
 					</div>
+					<hr>
 					<p class="mb-2 mt-3">
 						<strong>Images :</strong>
 					</p>
@@ -56,6 +61,34 @@
 									<img src="{{asset('images/')}}{{image.name}}" alt="image" class="image-preview bg-dark rounded p-0 gallerie-image">
 								</div>
 							{% endfor %}
+						</div>
+					</div>
+					<div class="float-end">
+						<a data-bs-toggle="modal" data-bs-target="#modalReportPraticien" data-bs-whatever="@mdo" class="pointer btn btn-success">
+							Signaler
+						</a>
+						<!-- REPORT MODAL -->
+						<div class="modal fade" id="modalReportPraticien" tabindex="-1" attr.aria-labelledby="modalReportPraticienLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="modalReportPraticienLabel">
+											Signalement
+										</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+
+									<div class="modal-body">
+										{{form_start(form)}}
+										{{form_widget(form)}}
+										<button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+											Annuler
+										</button>
+										<button type="submit" class="btn btn-success">Valider</button>
+										{{form_end(form)}}
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -4,14 +4,12 @@
 {% endblock %}
 
 {% block body %}
-	{% if is_granted("IS_AUTHENTICATED_FULLY")%}
-		<div class="mb-3">
-			{% include "admin/_praticien.html.twig" %}
-			{% include "admin/_group.html.twig" %}
-			{% include "admin/_technique.html.twig" %}
-			{% include "admin/_bias_category.html.twig" %}
-			{% include "admin/_bias.html.twig" %}
-			{% include "admin/_youtube_channel.html.twig" %}
-		</div>
-	{% endif %}
+	<div class="mb-3">
+		{% include "admin/_praticien.html.twig" %}
+		{% include "admin/_group.html.twig" %}
+		{% include "admin/_technique.html.twig" %}
+		{% include "admin/_bias_category.html.twig" %}
+		{% include "admin/_bias.html.twig" %}
+		{% include "admin/_youtube_channel.html.twig" %}
+	</div>
 {% endblock %}

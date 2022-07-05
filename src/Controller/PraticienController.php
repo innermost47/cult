@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Image;
 use App\Entity\Praticien;
+use App\Entity\Reporting;
 use App\Form\PraticienType;
+use App\Form\ReportType;
 use App\Repository\PraticienRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,11 +14,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Cocur\Slugify\Slugify;
+use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/praticien", name="praticien_")
+ * @Security("is_granted('ROLE_USER')")
  */
 class PraticienController extends AbstractController
 {
@@ -29,14 +35,16 @@ class PraticienController extends AbstractController
     private $repository;
     private $fileUploader;
     private $showRender;
+    private $listRender;
 
     public function __construct(EntityManagerInterface $manager, PraticienRepository $repository, FileUploader $fileUploader)
     {
         $this->manager = $manager;
-        $this->route = 'home_index';
+        $this->route = 'admin_index';
         $this->fragment = 'praticien';
         $this->formRender = 'praticien/index.html.twig';
         $this->showRender = 'praticien/show.html.twig';
+        $this->listRender = 'praticien/list.html.twig';
         $this->slugger = new Slugify();
         $this->repository = $repository;
         $this->fileUploader = $fileUploader;
@@ -147,11 +155,36 @@ class PraticienController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}", name="show", methods={"GET"})
+     * @Route("/list", name="list", methods={"GET"})
      */
-    public function show(Praticien $praticien): Response
+    public function list(PraticienRepository $praticienRepository): Response
     {
+        return $this->render($this->listRender, [
+            'praticiens' => $praticienRepository->findAllByLastName(),
+        ]);
+    }
+
+    /**
+     * @Route("/{slug}", name="show", methods={"GET", "POST"})
+     */
+    public function show(Praticien $praticien, Request $request): Response
+    {
+        $item = new Reporting();
+
+        $form = $this->createForm(ReportType::class, $item);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $item->setPraticien($praticien);
+            $item->setCreatedAt(new DateTimeImmutable());
+            $this->manager->persist($item);
+            $this->manager->flush();
+            return $this->redirect($request->getUri());
+        }
+
         return $this->render($this->showRender, [
+            'form' => $form->createView(),
             'praticien' => $praticien,
         ]);
     }

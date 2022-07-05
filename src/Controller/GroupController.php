@@ -14,9 +14,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/group", name="group_")
+ * @Security("is_granted('ROLE_USER')")
  */
 class GroupController extends AbstractController
 {
@@ -32,7 +34,7 @@ class GroupController extends AbstractController
     public function __construct(EntityManagerInterface $manager, GroupRepository $repository, FileUploader $fileUploader)
     {
         $this->manager = $manager;
-        $this->route = 'home_index';
+        $this->route = 'admin_index';
         $this->fragment = 'group';
         $this->formRender = 'group/index.html.twig';
         $this->showRender = 'group/show.html.twig';

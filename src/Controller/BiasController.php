@@ -13,9 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/bias", name="bias_")
+ * @Security("is_granted('ROLE_USER')")
  */
 class BiasController extends AbstractController
 {
@@ -31,7 +33,7 @@ class BiasController extends AbstractController
     public function __construct(EntityManagerInterface $manager, BiasRepository $repository, FileUploader $fileUploader)
     {
         $this->manager = $manager;
-        $this->route = 'home_index';
+        $this->route = 'admin_index';
         $this->fragment = 'bias';
         $this->formRender = 'bias/index.html.twig';
         $this->listRender = 'bias/list.html.twig';
