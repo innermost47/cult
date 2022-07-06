@@ -37,19 +37,24 @@
 					</p>
 				</div>
 				<p class="card-text">
-					<strong>Auteur du signalement :</strong>
-					{{report.reporter}}<br>
-
-					<strong>Contact de l'auteur :</strong>
-					{{report.reporterContact}}<br>
+					{% if report.reporter %}
+						<strong>Auteur du signalement :</strong>
+						{{report.reporter}}<br>
+					{% endif %}
+					{% if report.reporterContact %}
+						<strong>Contact de l'auteur :</strong>
+						{{report.reporterContact}}<br>
+					{% endif %}
 				</p>
 			</div>
-			<hr>
-			<div>
-				<p>
-					<strong>Description :</strong>
-					{{report.description}}<br></p>
-			</div>
+			{% if report.description %}
+				<hr>
+				<div>
+					<p>
+						<strong>Description :</strong>
+						{{report.description}}<br></p>
+				</div>
+			{% endif %}
 		</div>
 	</div>
 </div></div></section>{% endblock %}

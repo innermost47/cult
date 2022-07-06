@@ -7,6 +7,15 @@
 
 	<section>
 		<div class="container">
+			{% if techniques|length == 0 %}
+				<div class="card mt-3 shadow mb-3">
+					<div class="card-body text-center">
+						<p class="m-0">
+							<i>Nous n'avons aucune technique actuellement.</i>
+						</p>
+					</div>
+				</div>
+			{% endif %}
 			{% for technique in techniques | reverse %}
 				<a href="/technique/{{technique.slug}}">
 					<div class="card mt-3 shadow mb-3 filter-hover">

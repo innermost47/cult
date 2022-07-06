@@ -7,6 +7,15 @@
 
 	<section>
 		<div class="container">
+			{% if reports|length == 0 %}
+				<div class="card mt-3 shadow mb-3">
+					<div class="card-body text-center">
+						<p class="m-0">
+							<i>Nous n'avons reçu aucun signalement actuellement.</i>
+						</p>
+					</div>
+				</div>
+			{% endif %}
 			{% for report in reports | reverse %}
 				<div class="card mt-3 shadow mb-3">
 					<div class="card-body flex-box">

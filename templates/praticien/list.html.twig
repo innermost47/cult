@@ -7,6 +7,15 @@
 
 	<section>
 		<div class="container">
+			{% if praticiens|length == 0 %}
+				<div class="card mt-3 shadow mb-3">
+					<div class="card-body text-center">
+						<p class="m-0">
+							<i>Nous n'avons aucun praticien actuellement.</i>
+						</p>
+					</div>
+				</div>
+			{% endif %}
 			{% for praticien in praticiens | reverse %}
 
 				<div class="card mt-3 shadow mb-3 filter-hover">

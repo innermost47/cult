@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Esprit sceptique - 
-		Liste des chaînes Youtube
+				Liste des chaînes Youtube
 {% endblock %}
 
 {% block body %}
 
 	<section>
 		<div class="container">
+			{% if youtubeChannels|length == 0 %}
+				<div class="card mt-3 shadow mb-3">
+					<div class="card-body text-center">
+						<p class="m-0">
+							<i>Nous n'avons aucune chaîne YouTube actuellement.</i>
+						</p>
+					</div>
+				</div>
+			{% endif %}
 			{% for youtubeChannel in youtubeChannels | reverse %}
 				<a href="/youtube-channel/{{youtubeChannel.slug}}">
 					<div class="card mt-3 shadow mb-3 filter-hover">
