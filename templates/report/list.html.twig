@@ -16,7 +16,11 @@
 							-
 							{% if report.groupe %}
 								{{report.groupe.name}}
-							{% else %}
+							{% endif %}
+							{% if report.groupe and report.praticien %}
+								-
+							{% endif %}
+							{% if report.praticien %}
 								{{report.praticien.firstName}}
 								{{report.praticien.lastName}}
 							{% endif %}

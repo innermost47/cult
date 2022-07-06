@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Group;
 use App\Entity\Image;
+use App\Entity\Reporting;
 use App\Form\GroupType;
+use App\Form\ReportType;
 use App\Repository\GroupRepository;
 use App\Service\FileUploader;
 use Cocur\Slugify\Slugify;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -160,11 +164,30 @@ class GroupController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}", name="show", methods={"GET"})
+     * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
-    public function show(Group $group): Response
+    public function show(Group $group, Request $request): Response
     {
+        $item = new Reporting();
+
+        $form = $this->createForm(ReportType::class, $item, [
+            'function' => 'add'
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $item->setGroupe($group);
+            $item->setCreatedAt(new DateTimeImmutable());
+            $newDate = new DateTime();
+            $newDate = $newDate->format('d-m-Y-h-i-s');
+            $item->setSlug($this->slugger->slugify('report-' . $item->getGroupe()->getName() . '-' . $newDate));
+            $this->manager->persist($item);
+            $this->manager->flush();
+            return $this->redirect($request->getUri());
+        }
         return $this->render($this->showRender, [
+            'form' => $form->createView(),
             'group' => $group,
         ]);
     }

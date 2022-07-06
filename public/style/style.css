@@ -9,7 +9,7 @@ a {
 }
 
 html {
-  scroll-padding-top: 75px;
+  scroll-padding-top: 80px;
 }
 
 textarea {
@@ -182,4 +182,34 @@ header {
 
 .image-height {
   height: 195px;
+}
+
+/* LEFT MENU */
+
+.left-menu {
+  position: fixed;
+  height: 90%;
+}
+
+.left-menu > ul > li > a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.smartphone {
+  display: inline-block;
+}
+
+.desktop {
+  display: none;
+}
+
+@media screen and (min-width: 992px) {
+  .smartphone {
+    display: none;
+  }
+
+  .desktop {
+    display: block;
+  }
 }

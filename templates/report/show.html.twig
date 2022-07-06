@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block body %}
-{% if is_granted("IS_AUTHENTICATED_FULLY")%}
 	<section>
 		<div class="container">
 			<div class="card mt-3 shadow mb-3">
@@ -17,36 +16,40 @@
 					<div class="flex-box">
 						<div>
 							<p class="mb-2">
-								<strong>Groupe ou praticien visé par le signalement :</strong><br>
+								<strong>Groupe/praticien visé par le signalement :</strong><br>
 								<i>
 									{% if report.groupe %}
 										<a href="/group/{{report.groupe.slug}}">{{report.groupe.name}}</a>
 
-									{% else %}
+									{% endif %}
+									{% if report.groupe and report.praticien %}
+										-
+									{% endif %}
+									{% if report.praticien %}
 										<a href="/praticien/{{report.praticien.slug}}">
 											{{report.praticien.firstName}}
 											{{report.praticien.lastName}}</a>
 									{% endif %}
-								</i>
-
+								</p>
 							</p>
-						</div>
-						<p class="card-text">
-							<strong>Auteur du signalement :</strong>
-							{{report.reporter}}<br>
+						</i>
 
-							<strong>Contact de l'auteur :</strong>
-							{{report.reporterContact}}<br>
-						</p>
-					</div>
-					<hr>
-					<div>
-						<p>
-							<strong>Description :</strong>
-							{{report.description}}<br></p>
-					</div>
+					</p>
 				</div>
+				<p class="card-text">
+					<strong>Auteur du signalement :</strong>
+					{{report.reporter}}<br>
+
+					<strong>Contact de l'auteur :</strong>
+					{{report.reporterContact}}<br>
+				</p>
+			</div>
+			<hr>
+			<div>
+				<p>
+					<strong>Description :</strong>
+					{{report.description}}<br></p>
 			</div>
 		</div>
 	</div>
-</section>{% endif %}{% endblock %}
+</div></div></section>{% endblock %}
