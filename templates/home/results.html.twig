@@ -1,0 +1,172 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Esprit sceptique - Résultats
+{% endblock %}
+
+{% block body %}
+
+
+	{% if type == 'praticien' %}
+		<section>
+			<div class="container">
+				{% if results|length == 0 %}
+					<div class="card mt-3 shadow mb-3">
+						<div class="card-body text-center">
+							<p class="m-0">
+								<i>Aucun praticien ne correspond à votre recherche.</i>
+							</p>
+						</div>
+					</div>
+				{% endif %}
+				{% for praticien in results | reverse %}
+
+					<div class="card mt-3 shadow mb-3 filter-hover">
+						<a href="/praticien/{{praticien.slug}}">
+							<div class="card-image-container">
+								<img src="{{asset('images/')}}{{praticien.images[0]}}" class="card-image-top rounded" alt="image">
+							</div>
+						</a>
+						<div class="card-body">
+							<h5 class="card-title text-dark">
+								{{praticien.firstName}}
+								{{praticien.lastName}}</h5>
+							<hr>
+							<p class="mb-2">
+								<strong>
+									<i>Techniques :</i>
+								</strong>
+								<ul class="list-group shadow-sm">
+									{% for technique in praticien.techniques %}
+										<li class="list-group-item">
+											<p class="m-0">{{technique.name}}</p>
+										</li>
+									{% endfor %}
+								</ul>
+							</p>
+
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</section>
+
+	{% elseif type == "technique" %}
+
+		<section>
+			<div class="container">
+				{% if results|length == 0 %}
+					<div class="card mt-3 shadow mb-3">
+						<div class="card-body text-center">
+							<p class="m-0">
+								<i>Aucune technique ne correspond à votre recherche.</i>
+							</p>
+						</div>
+					</div>
+				{% endif %}
+				{% for technique in results | reverse %}
+					<a href="/technique/{{technique.slug}}">
+						<div class="card mt-3 shadow mb-3 filter-hover">
+							<div class="card-image-container">
+								<img src="{{asset('images/')}}{{technique.image}}" class="card-image-top rounded" alt="image">
+							</div>
+							<div class="card-body">
+								<h5 class="card-title text-dark">
+									{{technique.name}}</h5>
+							</div>
+						</div>
+					</a>
+				{% endfor %}
+			</div>
+		</section>
+
+	{% elseif type == "report" %}
+
+		<section>
+			<div class="container">
+				{% if results|length == 0 %}
+					<div class="card mt-3 shadow mb-3">
+						<div class="card-body text-center">
+							<p class="m-0">
+								<i>Aucun signalement ne correspond à votre recherche.</i>
+							</p>
+						</div>
+					</div>
+				{% endif %}
+				{% for report in results | reverse %}
+					<div class="card mt-3 shadow mb-3">
+						<div class="card-body flex-box">
+							<div>Signalement -
+
+								{{report.createdAt|date('d-m-Y')}}
+								-
+								{% if report.groupe %}
+									{{report.groupe.name}}
+								{% endif %}
+								{% if report.groupe and report.praticien %}
+									-
+								{% endif %}
+								{% if report.praticien %}
+									{{report.praticien.firstName}}
+									{{report.praticien.lastName}}
+								{% endif %}
+							</div>
+
+							<div>
+								<a href="/report/{{report.slug}}">
+									<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewbox="0 0 16 16">
+										<path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+										<path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</section>
+
+	{% elseif type == "group" %}
+		<section>
+			<div class="container">
+				{% if results|length == 0 %}
+					<div class="card mt-3 shadow mb-3">
+						<div class="card-body text-center">
+							<p class="m-0">
+								<i>Aucun groupe ne correspond à votre recherche.</i>
+							</p>
+						</div>
+					</div>
+				{% endif %}
+				{% for group in results | reverse %}
+					<div class="card mt-3 shadow mb-3 filter-hover">
+						<a href="/group/{{group.slug}}">
+							<div class="card-image-container">
+								<img src="{{asset('images/')}}{{group.images[0]}}" class="card-image-top rounded" alt="image">
+							</div>
+						</a>
+						<div class="card-body">
+							<h5 class="card-title text-dark">
+								{{group.name}}</h5>
+							<hr>
+							<p class="mb-2">
+								<strong>
+									<i>Techniques :</i>
+								</strong>
+								<ul class="list-group shadow-sm">
+									{% for technique in group.techniques %}
+										<li class="list-group-item">
+											<p class="m-0">{{technique.name}}</p>
+										</li>
+									{% endfor %}
+								</ul>
+							</p>
+
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</section>
+	{% endif %}
+
+
+{% endblock %}

@@ -50,13 +50,12 @@ class TechniqueRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    //    public function findOneBySomeField($value): ?Technique
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findEverythingLike($search): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.name LIKE :search')
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }

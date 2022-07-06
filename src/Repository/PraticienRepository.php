@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Group;
 use App\Entity\Praticien;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -50,13 +51,13 @@ class PraticienRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    //    public function findOneBySomeField($value): ?Praticien
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findEverythingLike($search): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.lastName LIKE :search')
+            ->orWhere('p.firstName LIKE :search')
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }

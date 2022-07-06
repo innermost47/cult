@@ -39,28 +39,19 @@ class ReportingRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Reporting[] Returns an array of Reporting objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Reporting
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findEverythingLike($search): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.description LIKE :search')
+            ->orWhere('r.reporter LIKE :search')
+            ->orWhere('r.createdAt LIKE :search')
+            ->leftJoin('r.praticien', 'p')
+            ->orWhere('p.firstName LIKE :search')
+            ->orWhere('p.lastName LIKE :search')
+            ->leftJoin('r.groupe', 'g')
+            ->orWhere('g.name LIKE :search')
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }

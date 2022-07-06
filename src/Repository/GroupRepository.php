@@ -50,13 +50,12 @@ class GroupRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    //    public function findOneBySomeField($value): ?Group
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findEverythingLike($search): array
+    {
+        return $this->createQueryBuilder('g')
+            ->where('g.name LIKE :search')
+            ->setParameter(':search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }
