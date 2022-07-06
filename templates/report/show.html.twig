@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Esprit sceptique - Signalement
+	{{report.createdAt|date('d-m-Y')}}
+{% endblock %}
+
+{% block body %}
+{% if is_granted("IS_AUTHENTICATED_FULLY")%}
+	<section>
+		<div class="container">
+			<div class="card mt-3 shadow mb-3">
+				<div class="card-body">
+					<h5 class="card-title">
+						Signalement -
+						{{report.createdAt|date('d-m-Y')}}</h5>
+					<hr>
+					<div class="flex-box">
+						<div>
+							<p class="mb-2">
+								<strong>Groupe ou praticien visé par le signalement :</strong><br>
+								<i>
+									{% if report.groupe %}
+										<a href="/group/{{report.groupe.slug}}">{{report.groupe.name}}</a>
+
+									{% else %}
+										<a href="/praticien/{{report.praticien.slug}}">
+											{{report.praticien.firstName}}
+											{{report.praticien.lastName}}</a>
+									{% endif %}
+								</i>
+
+							</p>
+						</div>
+						<p class="card-text">
+							<strong>Auteur du signalement :</strong>
+							{{report.reporter}}<br>
+
+							<strong>Contact de l'auteur :</strong>
+							{{report.reporterContact}}<br>
+						</p>
+					</div>
+					<hr>
+					<div>
+						<p>
+							<strong>Description :</strong>
+							{{report.description}}<br></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>{% endif %}{% endblock %}

@@ -33,7 +33,7 @@ class YoutubeChannelController extends AbstractController
     public function __construct(EntityManagerInterface $manager, YoutubeChannelRepository $repository, FileUploader $fileUploader)
     {
         $this->manager = $manager;
-        $this->route = 'admin_index';
+        $this->route = 'admin';
         $this->fragment = 'youtube-channel';
         $this->formRender = 'youtube_channel/index.html.twig';
         $this->showRender = 'youtube_channel/show.html.twig';

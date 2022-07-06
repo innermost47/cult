@@ -31,7 +31,7 @@ class BiasCategoryController extends AbstractController
     public function __construct(EntityManagerInterface $manager, BiasCategoryRepository $repository)
     {
         $this->manager = $manager;
-        $this->route = 'admin_index';
+        $this->route = 'admin';
         $this->fragment = 'bias-category';
         $this->formRender = 'bias_category/index.html.twig';
         $this->slugger = new Slugify();

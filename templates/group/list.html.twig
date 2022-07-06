@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Esprit sceptique - Liste des groupes
+{% endblock %}
+
+{% block body %}
+
+	<section>
+		<div class="container">
+			{% for group in groups | reverse %}
+
+				<div class="card mt-3 shadow mb-3 filter-hover">
+					<a href="/group/{{group.slug}}">
+						<div class="card-image-container">
+							<img src="{{asset('images/')}}{{group.images[0]}}" class="card-image-top rounded" alt="image">
+						</div>
+					</a>
+					<div class="card-body">
+						<h5 class="card-title text-dark">
+							{{group.name}}</h5>
+						<hr>
+						<p class="mb-2">
+							<strong>
+								<i>Techniques :</i>
+							</strong>
+							<ul class="list-group shadow-sm">
+								{% for technique in group.techniques %}
+									<li class="list-group-item">
+										<p class="m-0">{{technique.name}}</p>
+									</li>
+								{% endfor %}
+							</ul>
+						</p>
+
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</section>
+
+{% endblock %}

@@ -30,14 +30,16 @@ class GroupController extends AbstractController
     private $repository;
     private $fileUploader;
     private $showRender;
+    private $listRender;
 
     public function __construct(EntityManagerInterface $manager, GroupRepository $repository, FileUploader $fileUploader)
     {
         $this->manager = $manager;
-        $this->route = 'admin_index';
+        $this->route = 'admin';
         $this->fragment = 'group';
         $this->formRender = 'group/index.html.twig';
         $this->showRender = 'group/show.html.twig';
+        $this->listRender = 'group/list.html.twig';
         $this->slugger = new Slugify();
         $this->repository = $repository;
         $this->fileUploader = $fileUploader;
@@ -145,6 +147,16 @@ class GroupController extends AbstractController
         } else {
             return new JsonResponse(['error' => 'Token invalide'], 400);
         }
+    }
+
+    /**
+     * @Route("/list", name="list", methods={"GET"})
+     */
+    public function list(GroupRepository $repository): Response
+    {
+        return $this->render($this->listRender, [
+            'groups' => $repository->findBy([], ["name" => "DESC"]),
+        ]);
     }
 
     /**

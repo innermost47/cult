@@ -2,24 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Bias;
-use App\Form\BiasType;
-use App\Repository\BiasCategoryRepository;
-use App\Repository\BiasRepository;
-use App\Service\FileUploader;
+use App\Entity\Reporting;
+use App\Form\ReportType;
+use App\Repository\ReportingRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/bias", name="bias_")
+ * @Route("/report", name="report_")
  * @Security("is_granted('ROLE_USER')")
  */
-class BiasController extends AbstractController
+class ReportController extends AbstractController
 {
     private $manager;
     private $route;
@@ -27,54 +25,33 @@ class BiasController extends AbstractController
     private $formRender;
     private $slugger;
     private $repository;
-    private $listRender;
     private $showRender;
+    private $listRender;
 
-    public function __construct(EntityManagerInterface $manager, BiasRepository $repository, FileUploader $fileUploader)
+    public function __construct(EntityManagerInterface $manager, ReportingRepository $repository)
     {
         $this->manager = $manager;
         $this->route = 'admin';
-        $this->fragment = 'bias';
-        $this->formRender = 'bias/index.html.twig';
-        $this->listRender = 'bias/list.html.twig';
-        $this->showRender = 'bias/show.html.twig';
+        $this->fragment = 'report';
+        $this->formRender = 'report/index.html.twig';
+        $this->showRender = 'report/show.html.twig';
+        $this->listRender = 'report/list.html.twig';
         $this->slugger = new Slugify();
         $this->repository = $repository;
-        $this->fileUploader = $fileUploader;
     }
-
-    /**
-     * @Route("/add", name="add", methods={"GET", "POST"})
-     */
-    public function add(Request $request): Response
-    {
-        $item = new Bias();
-        $form = $this->createForm(BiasType::class, $item, []);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $item->setSlug($this->slugger->slugify($item->getName()));
-            $this->manager->persist($item);
-            $this->manager->flush();
-            return $this->redirectToRoute($this->route, ['_fragment' => $this->fragment]);
-        }
-
-        return $this->render($this->formRender, [
-            'form' => $form->createView(),
-        ]);
-    }
-
 
     /**
      * @Route("/update/{slug}", name="update", methods={"GET", "POST"})
      */
-    public function update(Bias $item, Request $request): Response
+    public function update(Reporting $item, Request $request): Response
     {
-        $form = $this->createForm(BiasType::class, $item, []);
+        $form = $this->createForm(ReportType::class, $item, [
+            'function' => 'update'
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $item->setSlug($this->slugger->slugify($item->getName()));
             $this->manager->persist($item);
             $this->manager->flush();
             return $this->redirectToRoute($this->route, ['_fragment' => $this->fragment]);
@@ -97,7 +74,6 @@ class BiasController extends AbstractController
         $item = $this->repository->findOneById($id);
 
         if ($item !== null) {
-
             $this->manager->remove($item);
             $this->manager->flush();
         }
@@ -107,20 +83,20 @@ class BiasController extends AbstractController
     /**
      * @Route("/list", name="list", methods={"GET"})
      */
-    public function list(BiasCategoryRepository $biasCategoryRepository): Response
+    public function list(ReportingRepository $repository): Response
     {
         return $this->render($this->listRender, [
-            'biasCategories' => $biasCategoryRepository->findAll(),
+            'reports' => $repository->findBy([], ["createdAt" => "ASC"]),
         ]);
     }
 
     /**
      * @Route("/{slug}", name="show", methods={"GET"})
      */
-    public function show(Bias $bias): Response
+    public function show(Reporting $reporting): Response
     {
         return $this->render($this->showRender, [
-            'bias' => $bias,
+            'report' => $reporting,
         ]);
     }
 }

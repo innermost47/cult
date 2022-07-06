@@ -6,6 +6,7 @@ use App\Repository\BiasCategoryRepository;
 use App\Repository\BiasRepository;
 use App\Repository\GroupRepository;
 use App\Repository\PraticienRepository;
+use App\Repository\ReportingRepository;
 use App\Repository\TechniqueRepository;
 use App\Repository\YoutubeChannelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,8 +28,9 @@ class AdminController extends AbstractController
     private $biasRepository;
     private $biasCategoryRepository;
     private $youtubeChannelRepository;
+    private $reportingRepository;
 
-    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository, BiasRepository $biasRepository, BiasCategoryRepository $biasCategoryRepository, YoutubeChannelRepository $youtubeChannelRepository)
+    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository, BiasRepository $biasRepository, BiasCategoryRepository $biasCategoryRepository, YoutubeChannelRepository $youtubeChannelRepository, ReportingRepository $reportingRepository)
     {
         $this->praticienRepository = $praticienRepository;
         $this->techniqueRepository = $techniqueRepository;
@@ -36,6 +38,7 @@ class AdminController extends AbstractController
         $this->biasRepository = $biasRepository;
         $this->biasCategoryRepository = $biasCategoryRepository;
         $this->youtubeChannelRepository = $youtubeChannelRepository;
+        $this->reportingRepository = $reportingRepository;
     }
 
     /**
@@ -50,6 +53,7 @@ class AdminController extends AbstractController
             'biases' => $this->biasRepository->findAllByName(),
             'biasCategories' => $this->biasCategoryRepository->findAll(),
             'youtubeChannels' => $this->youtubeChannelRepository->findAllByName(),
+            'reports' => $this->reportingRepository->findAll()
         ]);
     }
 }

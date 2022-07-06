@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Cocur\Slugify\Slugify;
+use DateTime;
 use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -40,7 +41,7 @@ class PraticienController extends AbstractController
     public function __construct(EntityManagerInterface $manager, PraticienRepository $repository, FileUploader $fileUploader)
     {
         $this->manager = $manager;
-        $this->route = 'admin_index';
+        $this->route = 'admin';
         $this->fragment = 'praticien';
         $this->formRender = 'praticien/index.html.twig';
         $this->showRender = 'praticien/show.html.twig';
@@ -171,13 +172,18 @@ class PraticienController extends AbstractController
     {
         $item = new Reporting();
 
-        $form = $this->createForm(ReportType::class, $item);
+        $form = $this->createForm(ReportType::class, $item, [
+            'function' => 'add'
+        ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $item->setPraticien($praticien);
             $item->setCreatedAt(new DateTimeImmutable());
+            $newDate = new DateTime();
+            $newDate = $newDate->format('d-m-Y-h-i-s');
+            $item->setSlug($this->slugger->slugify('report-' . $item->getPraticien()->getFirstName() . '-' . $item->getPraticien()->getLastName() . '-' . $newDate));
             $this->manager->persist($item);
             $this->manager->flush();
             return $this->redirect($request->getUri());

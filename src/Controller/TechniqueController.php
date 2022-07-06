@@ -33,7 +33,7 @@ class TechniqueController extends AbstractController
     public function __construct(EntityManagerInterface $manager, TechniqueRepository $repository, FileUploader $fileUploader)
     {
         $this->manager = $manager;
-        $this->route = 'admin_index';
+        $this->route = 'admin';
         $this->fragment = 'technique';
         $this->formRender = 'technique/index.html.twig';
         $this->showRender = 'technique/show.html.twig';
