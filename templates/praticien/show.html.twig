@@ -95,4 +95,102 @@
 			</div>
 		</div>
 	</div>
+</section>
+<section id="comments">
+	<div class="container">
+		{% for comment in praticien.comments %}
+			<div class="card mt-3 shadow mb-3">
+				<div class="card-body">
+					<h6 class="card-title">{{comment.title}}</h6>
+					<p class="m-0">{{comment.text}}</p>
+				</div>
+				<div class="card-footer d-flex justify-content-between align-items-center flex-row">
+					{% if user == comment.user %}
+						<div
+							class="edit">
+							<!-- UPDATE -->
+							<a data-bs-toggle="modal" data-bs-target="#modalUpdateComment{{comment.id}}" data-bs-whatever="@mdo" class="pointer">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-pen-fill" viewbox="0 0 16 16">
+									<path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+								</svg>
+							</a>
+							<!-- UPDATE COMMENT MODAL -->
+							<div class="modal fade" id="modalUpdateComment{{comment.id}}" tabindex="-1" attr.aria-labelledby="modalUpdateCommentLabel{{comment.id}}" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="modalUpdateCommentLabel{{comment.id}}">
+												Modifier "{{comment.title}}"
+											</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<form method="post">
+												<div class="mb-3">
+													<label for="title" class="form-label">Titre</label>
+													<input type="text" class="form-control" id="title" value="{{comment.title}}" name="title" required>
+												</div>
+												<div class="mb-3">
+													<label for="text" class="form-label">Texte</label>
+													<textarea name="text" id="text" class="form-control" required>{{comment.text}}</textarea>
+												</div>
+												<input type="hidden" name="slug" value="{{comment.slug}}" required>
+												<button type="submit" name="update" class="btn btn-success">Valider</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- DELETE -->
+							<a data-bs-toggle="modal" data-bs-target="#modalDeleteComment{{comment.id}}" data-bs-whatever="@mdo" class="pointer">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash-fill" viewbox="0 0 16 16">
+									<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+								</svg>
+							</a>
+							<!-- DELETE MODAL -->
+							<div class="modal fade" id="modalDeleteComment{{comment.id}}" tabindex="-1" attr.aria-labelledby="modalDeleteCommentLabel{{comment.id}}" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="modalDeleteCommentLabel{{comment.id}}">
+												Suppression
+											</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<p>Confirmez vous la suppression de ce commentaire ?</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+												Annuler
+											</button>
+											<a href="{{path('group_comment_delete', {id: comment.id})}}" class="btn btn-danger">Valider</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+
+					<p class="m-0">
+						<i>{{comment.createdAt|date('d-m-Y H:i')}}</i>
+					</p>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</section>
+<section id="comment-form">
+	<div class="container">
+		<div class="card mt-3 shadow mb-3">
+			<div class="card-body">
+				<h6 class="card-title">Nouveau commentaire</h6>
+				<hr>
+				{{form_start(commentForm)}}
+				{{form_widget(commentForm)}}
+				<button type="submit" class="btn btn-success">Valider</button>
+				{{form_end(commentForm)}}
+			</div>
+		</div>
+	</div>
 </section>{% endif %}{% endblock %}

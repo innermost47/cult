@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Comments;
 use App\Entity\Group;
 use App\Entity\Image;
 use App\Entity\Reporting;
+use App\Form\CommentType;
 use App\Form\GroupType;
 use App\Form\ReportType;
+use App\Repository\CommentsRepository;
 use App\Repository\GroupRepository;
 use App\Service\FileUploader;
 use Cocur\Slugify\Slugify;
@@ -166,8 +169,10 @@ class GroupController extends AbstractController
     /**
      * @Route("/{slug}", name="show", methods={"GET", "POST"})
      */
-    public function show(Group $group, Request $request): Response
+    public function show(Group $group, Request $request, CommentsRepository $commentsRepository): Response
     {
+        // ADD REPORT
+
         $item = new Reporting();
 
         $form = $this->createForm(ReportType::class, $item, [
@@ -186,9 +191,68 @@ class GroupController extends AbstractController
             $this->manager->flush();
             return $this->redirect($request->getUri());
         }
+
+        // ADD COMMENT
+
+        $comment = new Comments();
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setCreatedAt(new DateTimeImmutable());
+            $comment->setUser($this->getUser());
+            $comment->setGroupe($group);
+            $newDate = new DateTime();
+            $newDate = $newDate->format('d-m-Y-h-i-s');
+            $comment->setSlug($this->slugger->slugify($comment->getTitle() . '-' . $newDate));
+            $this->manager->persist($comment);
+            $this->manager->flush();
+            return $this->redirect($request->getUri());
+        }
+
+        // UPDATE COMMENT
+
+        if (isset($_POST["update"])) {
+            $title = $this->verifyInput($_POST['title']);
+            $text = $this->verifyInput($_POST['text']);
+            $slug = $this->verifyInput($_POST["slug"]);
+            if (!empty($title) && !empty($text) && !empty($slug)) {
+                if (strlen($title) < 255) {
+                    $commentToUpdate = $commentsRepository->findOneBy(["slug" => $slug]);
+                    if ($commentToUpdate !== null) {
+                        $commentToUpdate->setTitle($title);
+                        $commentToUpdate->setText($text);
+                        $this->manager->persist($commentToUpdate);
+                        $this->manager->flush();
+                    }
+                }
+            }
+        }
+
         return $this->render($this->showRender, [
             'form' => $form->createView(),
+            'commentForm' => $commentForm->createView(),
             'group' => $group,
+            'user' => $this->getUser(),
         ]);
+    }
+
+    /**
+     * @Route("/comment/delete/{id}", name="comment_delete")
+     */
+    public function deleteComment($id, CommentsRepository $commentsRepository)
+    {
+        if (!$id) {
+            return $this->redirectToRoute($this->route, ['_fragment' => $this->fragment]);
+        }
+
+        $item = $commentsRepository->findOneBy(["id" => $id]);
+
+        if ($item !== null) {
+            $this->manager->remove($item);
+            $this->manager->flush();
+        }
+        $page = $_SERVER["HTTP_REFERER"];
+        return $this->redirect($page);
     }
 }

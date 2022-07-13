@@ -74,11 +74,17 @@ class Praticien
      */
     private $reportings;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="praticien", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->techniques = new ArrayCollection();
         $this->reportings = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -269,5 +275,35 @@ class Praticien
     public function __toString()
     {
         return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setPraticien($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPraticien() === $this) {
+                $comment->setPraticien(null);
+            }
+        }
+
+        return $this;
     }
 }
