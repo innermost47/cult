@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Esprit sceptique - Log in!
+{% block title %}Esprit sceptique - Log in
 {% endblock %}
 
 {% block body %}
@@ -34,7 +34,7 @@
 							<button class="btn btn-primary" type="submit">
 								Connexion
 							</button>
-							{# <a href="{{path('reset-password')}}" class="text-center">Mot de passe oublié ?</a> #}
+							<a href="{{path('reset-password')}}" class="text-center">Mot de passe oublié ?</a>
 						</div>
 						{% if error %}
 							<div class="alert alert-danger mt-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

@@ -177,7 +177,17 @@
 					{% endif %}
 
 					<p class="m-0">
-						<i>{{comment.createdAt|date('d-m-Y H:i')}}</i>
+						<i>
+							{% if comment.user.pseudo %}
+								Par :
+								{{comment.user.pseudo}}
+								-
+								{{comment.user.adfi.city}}
+								|
+							{% endif %}
+							Le :
+							{{comment.createdAt|date('d-m-Y H:i')}}
+						</i>
 					</p>
 				</div>
 			</div>

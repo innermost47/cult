@@ -9,3 +9,19 @@ home:
 admin:
   path: /admin
   controller: App\Controller\AdminController::index
+
+# RESET PASSWORD
+reset-password:
+  path: /reset-password
+  controller: App\Controller\ResetPasswordController::index
+enter-code:
+  path: /enter-code
+  controller: App\Controller\ResetPasswordController::code
+change-password:
+  path: /change-password
+  controller: App\Controller\ResetPasswordController::change
+
+# MODIFY PASSWORD
+modify-password:
+  path: /modify-password/{id}
+  controller: App\Controller\ChangePasswordController::update

@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Repository\AdfiRepository;
 use App\Repository\BiasCategoryRepository;
 use App\Repository\BiasRepository;
 use App\Repository\GroupRepository;
 use App\Repository\PraticienRepository;
 use App\Repository\ReportingRepository;
 use App\Repository\TechniqueRepository;
+use App\Repository\UserRepository;
 use App\Repository\YoutubeChannelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,8 +31,10 @@ class AdminController extends AbstractController
     private $biasCategoryRepository;
     private $youtubeChannelRepository;
     private $reportingRepository;
+    private $userRepository;
+    private $adfiRepository;
 
-    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository, BiasRepository $biasRepository, BiasCategoryRepository $biasCategoryRepository, YoutubeChannelRepository $youtubeChannelRepository, ReportingRepository $reportingRepository)
+    public function __construct(PraticienRepository $praticienRepository, TechniqueRepository $techniqueRepository, GroupRepository $groupRepository, BiasRepository $biasRepository, BiasCategoryRepository $biasCategoryRepository, YoutubeChannelRepository $youtubeChannelRepository, ReportingRepository $reportingRepository, UserRepository $userRepository, AdfiRepository $adfiRepository)
     {
         $this->praticienRepository = $praticienRepository;
         $this->techniqueRepository = $techniqueRepository;
@@ -39,6 +43,8 @@ class AdminController extends AbstractController
         $this->biasCategoryRepository = $biasCategoryRepository;
         $this->youtubeChannelRepository = $youtubeChannelRepository;
         $this->reportingRepository = $reportingRepository;
+        $this->userRepository = $userRepository;
+        $this->adfiRepository = $adfiRepository;
     }
 
     /**
@@ -53,7 +59,9 @@ class AdminController extends AbstractController
             'biases' => $this->biasRepository->findAllByName(),
             'biasCategories' => $this->biasCategoryRepository->findAll(),
             'youtubeChannels' => $this->youtubeChannelRepository->findAllByName(),
-            'reports' => $this->reportingRepository->findAll()
+            'reports' => $this->reportingRepository->findAll(),
+            'users' => $this->userRepository->findAll(),
+            'adfis' => $this->adfiRepository->findAll(),
         ]);
     }
 }

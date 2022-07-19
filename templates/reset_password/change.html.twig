@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Esprit sceptique - Récupération mot de passe
+{% endblock %}
+
+{% block body %}
+	<div class="container window-log">
+		<div class="box-log bg-light rounded">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="image-container">
+						<img src="{{asset('images/reset.jpg')}}" alt="reset password image">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<form method="post" class="mt-3">
+						<h1 class="h3 mb-3 font-weight-normal text-center">Veuillez choisir un nouveau mot de passe</h1>
+						<div class="mb-3">
+							<label for="code" class="form-label required">Votre nouveau mot de passe</label>
+							<input type="password" name="mdp" class="form-control">
+						</div>
+						<div class="mb-3">
+							<label for="code" class="form-label required">Veuillez confirmer votre nouveau mot de passe</label>
+							<input type="password" name="mdpConfirm" class="form-control">
+						</div>
+						<div class="d-flex flex-row justify-content-between">
+							<button class="btn btn-primary" type="submit" name="submit">
+								Valider
+							</button>
+						</div>
+						{% if msg != "" %}
+							<div class="alert alert-danger mt-3">{{msg}}</div>
+						{% endif %}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

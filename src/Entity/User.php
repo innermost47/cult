@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"pseudo"}, message="There is already an account with this pseudo")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -43,6 +44,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user", orphanRemoval=true)
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Adfi::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $adfi;
 
     public function __construct()
     {
@@ -164,6 +176,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function getAdfi(): ?Adfi
+    {
+        return $this->adfi;
+    }
+
+    public function setAdfi(?Adfi $adfi): self
+    {
+        $this->adfi = $adfi;
 
         return $this;
     }

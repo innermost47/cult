@@ -46,7 +46,7 @@ class PraticienRepository extends ServiceEntityRepository
     public function findAllByLastName(): array
     {
         return $this->createQueryBuilder('p')
-            ->orderBy('p.lastName', 'DESC')
+            ->orderBy('p.zip', 'DESC')
             ->getQuery()
             ->getResult();
     }
