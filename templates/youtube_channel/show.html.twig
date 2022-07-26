@@ -22,7 +22,7 @@
 						{{youtubeChannel.name}}</h5>
 					<hr>
 					<p class="card-text">
-						{{youtubeChannel.description}}
+						{{youtubeChannel.description | raw}}
 					</p>
 					<div class="socials">
 						<a href="{{youtubeChannel.link}}" target="_blank"><img src="{{asset('images/yt.svg')}}" alt="youtube link" class="socials-logo"></a>

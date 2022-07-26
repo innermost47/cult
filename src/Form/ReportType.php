@@ -21,6 +21,7 @@ class ReportType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description (facultatif)',
+                'attr' => array('class' => "tiny"), 'required' => false,  'empty_data' => '',
                 'required' => false
             ])
             ->add('reporterContact', null, [

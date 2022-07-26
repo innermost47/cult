@@ -13,7 +13,7 @@ html {
 }
 
 textarea {
-  height: 200px;
+  height: 350px;
 }
 
 body {
@@ -89,7 +89,7 @@ header {
 .sticky {
   top: 0;
   position: sticky;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* GALERIE IMAGES */

@@ -23,7 +23,7 @@
 						{{technique.name}}</h5>
 					<hr>
 					<p class="card-text">
-						{{technique.description}}
+						{{technique.description | raw}}
 					</p>
 					{% if is_granted("IS_AUTHENTICATED_FULLY")%}
 						{% if technique.praticiens | length > 0 %}

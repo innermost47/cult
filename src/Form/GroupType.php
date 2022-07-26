@@ -73,6 +73,7 @@ class GroupType extends AbstractType
             ])
             ->add('description', null, [
                 'label' => 'Description',
+                'attr' => array('class' => "tiny"), 'required' => false,  'empty_data' => '',
                 'constraints' => [
                     new NotBlank(),
                     new Length([

@@ -27,6 +27,7 @@ class CommentType extends AbstractType
             ])
             ->add('text', null, [
                 'label' => 'Texte',
+                'attr' => array('class' => "tiny"), 'required' => false,  'empty_data' => '',
                 'constraints' => [
                     new NotBlank(),
                     new Length([
